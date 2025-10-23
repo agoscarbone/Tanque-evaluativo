@@ -210,7 +210,7 @@ void MainWindow::tanklevel()
     }
 
 
-    // ------------------ Balance + integración ------------------
+    // ------------------------------------
     // T1: entra caud_in, sale (flujo_A + flujo_B)
     double delta_t1 = (caud_in - (flujo_A + flujo_B)) * dt_eff;
     // T2: entra flujo_A, sale caud_out_A
