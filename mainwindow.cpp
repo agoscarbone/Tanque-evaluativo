@@ -145,7 +145,6 @@ void MainWindow::tanklevel()
     double flujo_A = 0.0; // L/s hacia T2
     double flujo_B = 0.0; // L/s hacia T3
 
-    // Si hay entrada o salida activa, procesamos
     if ((caud_in > 0.0) || (caud_out > 0.0))
     {
         bool tanque_lleno_A = (nivel_t2 >= cap_max_A);
@@ -156,13 +155,11 @@ void MainWindow::tanklevel()
         bool A_puede_recibir = (!tanque_lleno_A && !Aprohibido);
         bool B_puede_recibir = (!tanque_lleno_B && !Bprohibido);
 
-        // Salida bloqueada: ningún tanque puede recibir
         bool salida_bloqueada =
             (!A_puede_recibir && !B_puede_recibir) || (Aprohibido && Bprohibido);
 
         if (salida_bloqueada)
         {
-            // Bloqueamos siempre si no hay destino posible
             ui->dial_2->setEnabled(false);
             ui->dial_2->setValue(0);
             ui->lcdNumber_2->display(0);
@@ -171,23 +168,22 @@ void MainWindow::tanklevel()
         }
         else
         {
-            // Si al menos uno puede recibir, habilitamos la salida
             ui->dial_2->setEnabled(true);
 
             // Reparto de flujo
             if (A_puede_recibir && B_puede_recibir)
             {
-                flujo_A = 0.5 * caud_out; // mitad a cada uno
+                flujo_A = 0.5 * caud_out;
                 flujo_B = 0.5 * caud_out;
             }
             else if (A_puede_recibir)
             {
-                flujo_A = caud_out; // todo a A
+                flujo_A = caud_out;
                 flujo_B = 0.0;
             }
             else if (B_puede_recibir)
             {
-                flujo_B = caud_out; // todo a B
+                flujo_B = caud_out;
                 flujo_A = 0.0;
             }
 
